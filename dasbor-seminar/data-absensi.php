@@ -15,7 +15,7 @@ $db = new database();
 
 <?php
 include "config.php";
-$query = mysqli_query($connection,"select k.created_at as absensi, u.* from kehadiran k join user u on u.npa = k.npa");
+$query = mysqli_query($connection,"select k.created_at as absensi,k.images, u.* from kehadiran k join user u on u.npa = k.npa");
 ?>
 
 <!DOCTYPE html>
@@ -175,7 +175,8 @@ $query = mysqli_query($connection,"select k.created_at as absensi, u.* from keha
                                                 <th>Npa</th>
                                                 <th>Nama Pengguna</th>
                                                 <th>Sekolah</th>
-                                                <th>Absensi Pada</th>                                                                                                
+                                                <th>Absensi Pada</th>
+                                                <th>Photo</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -190,6 +191,7 @@ $query = mysqli_query($connection,"select k.created_at as absensi, u.* from keha
 												<td><font face="trebuchet MS"><?php echo $data["nama"];?></font></td>
                                                 <td><font face="trebuchet MS"><?php echo $data["sekolah"];?></font></td>
                                                 <td><font face="trebuchet MS"><?php echo $data["absensi"];?></font></td>                                                												
+                                                <td><<img src="<?php echo $data["images"] ?>" width="100" ></td>
 											</tr>
 	                                        <?php $no++; } ?>
 	                                        <?php } ?>
