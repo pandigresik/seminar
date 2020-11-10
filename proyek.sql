@@ -76,6 +76,6 @@ CREATE TABLE IF NOT EXISTS kehadiran (
   npa varchar(11) not null,
   images varchar(60) not null,  
   created_at datetime default CURRENT_TIMESTAMP,
-  PRIMARY key(id);
+  PRIMARY key(id)
 );
 

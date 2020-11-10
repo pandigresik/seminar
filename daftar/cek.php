@@ -1,7 +1,10 @@
+<?php 
+include "../koneksi.php";
+?>
 <!DOCTYPE html>
 <html>
 <head>
-<title>::Daftar Seminar::</title>
+<title>::Absensi Seminar::</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Daftar Seminar" />
@@ -21,32 +24,45 @@ addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); func
 <body>
 	<!-- perintah bg bergerak berada di folder video -->
 	<div data-vide-bg="video/1">
-	
+	<?php
+        $npa = '';
+        $info = '';
+		if($_POST['submit']){
+            $npa = $_POST['npa'];
+			$sql = "select * from user where npa = '{$npa}'";            
+            $result = mysql_query($sql);
+			if(mysql_num_rows($result)){
+				$data = mysql_fetch_array($result);				
+                $info = '<div style="padding:10px;background:#FFFFFF">
+							<div>Hasil pengecekan</div>
+							<hr>
+							<ul>
+								<li>NPA     :'.$data['npa'].'</li>
+								<li>Nama    :'.$data['nama'].'</li>
+								<li>Email   :'.$data['email'].'</li>
+								<li>Sekolah :'.$data['sekolah'].'</li>
+								<li>Daftar  :'.$data['wkt_dftr'].'</li>
+							</ul>
+						</div>
+					';
+			}else{
+                $info = '<div style="padding:10px;background:#FFFFFF">NPA tersebut tidak ditemukan, silakan lakukan pendaftaran di <a href="index.php">Daftar</a></div>';
+			}
+            
+			
+		}
+	?>
 	<div class="main-w3layouts center-container">
-		<h1><img src="images/iconamin.png" /><br/>Daftar Seminar</h1>		
-		<div class="main-agileinfo">		
+		<h1><img src="images/iconamin.png" /><br/>Daftar Seminar</h1>
+		<div class="main-agileinfo">
 			<div class="agileits-top"> 
-			<span class="btn" style="margin-top:-25px"><a href="cek.php">Cek Pendaftaran</a></span>
-				<form action="isi.php" method="post"> 
+				<form action="" method="post" enctype="multipart/form-data"> 
 					<i class="fa fa-user-o" aria-hidden="true"></i>
-					<input class="text" type="text" name="npa" placeholder="Nomer Pokok Anggota" required="">
-                    <input class="text" type="text" name="nama" placeholder="Nama Lengkap" required="">
-                    <input class="text" type="text" name="alamat" placeholder="Alamat Anda" required="">
-					<input class="text" type="text" name="sekolah" placeholder="Nama Sekolah" required="">
-                    <input class="text" type="text" name="tgl_lahir" placeholder="Tanggal Lahir Anda (yyyy-mm-dd)" required="">
-                    <input class="text email" type="email" name="email" placeholder="Email" required="">
-					<div class="wthree-text">  
-						<label class="anim">
-							<input type="checkbox" class="checkbox" required="">
-							<span>Saya Setuju dengan <a href="#">Syarat dan Ketentuan</a> berlaku.</span> 
-						</label>  
-						<div class="clear"> </div>
-					</div>   
-					
-					<input type="submit" value="DAFTAR">					
-				</form>				
-				
-			</div>	 			
+					<input class="text" type="text" name="npa" placeholder="Nomer Pokok Anggota" required="" value="<?php echo $npa ?>">                    
+					<input type="submit" name="submit" value="CEK">
+				</form>
+			</div>
+			<?php echo $info ?>	 
 		</div>	
 		<!-- copyright -->
 		<div class="w3copyright-agile">
@@ -63,8 +79,7 @@ addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); func
 <!-- //js -->
 <script type="text/javascript">
 	$(function(){
-		$('input[name=npa]').mask("99999999999");
-		$('input[name=tgl_lahir]').mask("9999-99-99");
+		$('input[name=npa]').mask("99999999999");		
 	})
 
 </script>
